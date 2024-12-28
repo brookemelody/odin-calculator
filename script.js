@@ -35,19 +35,38 @@ numButton.addEventListener("click", () => { parseNumber(Number(numButton.getAttr
 numButtonsDiv.appendChild(numButton);
 
 /**
- * 
- * @param {*} number 
+ * Sets the respective operand and displays it on the screen given a digit 0-9
+ * @param {*} number the digit to parse
  */
 function parseNumber(number)
 {
-    // Display the selected number on the screen
-    screen.textContent = number;
-
-    // Set the first operand
-    if (operation === "" && operand1 == null) {
-        operand1 = number;
+    let display;
+    // Set the first operand if the operation has not been specified yet
+    if (operation === "") {
+        if (operand1 == null) {
+            operand1 = number;
+        }
+        else {
+            // Shift the previous value of operand1 to the left by 1 decimal place to make room for the new digit
+            operand1 *= 10;
+            operand1 += number;
+        }
+        display = operand1;
+    }
+    // Set the second operand if the operation has already been specified
+    else {
+        if (operand2 == null) {
+            operand2 = number;
+        }
+        else {
+            operand2 *= 10;
+            operand2 += number;
+        }
+        display = operand2;
     }
 
+    // Display the current operand on the screen
+    screen.textContent = display;
 }
 
 // Target the div in the HTML that will serve as a container for the operation buttons
