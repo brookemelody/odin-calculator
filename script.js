@@ -171,6 +171,14 @@ function operate(operator, x, y)
 {
     let result;
     let fail = false;
+
+    // Check if operands have not been properly entered yet (either 1 or both are missing)
+    if (x == null || y == null) {
+        fail = true;
+        // Reset operation
+        operation = "";
+    }
+
     if (operator === "add") {
         result = add(x, y);
     }
