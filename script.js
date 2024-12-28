@@ -206,6 +206,11 @@ function operate(operator, x, y)
     }
 
     if (!fail) {
+        // Round the result to 10 decimal places if it is a float
+        if (!Number.isInteger(result)) {
+            result = result.toFixed(10);
+        }
+        
         // Display the result on the screen
         screen.textContent = result;
         // Set operand1 to the result and reset operand2 and operation
