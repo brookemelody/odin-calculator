@@ -6,3 +6,12 @@ body {
 #screen {
     text-align: right;
 }
+
+.buttons-container {
+    display: flex;
+}
+
+.operation-buttons {
+    display: flex;
+    flex-direction: column;
+}

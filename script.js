@@ -1,18 +1,53 @@
-let operand1 = 5;
-let operand2 = 3;
+// Intialize both operands as null values
+let operand1 = null;
+let operand2 = null;
+// Initialize operation as an empty String
+let operation = "";
+
+// Target the screen div
+const screen = document.querySelector("#screen");
 
 // Place the interactive buttons on the screen using JavaScript
 const numButtonsDiv = document.querySelector(".number-buttons");
 
 // Create the number buttons from digits 0-9
-for (let i = 0; i <= 9; i++) {
-    const numButton = document.createElement("button");
+let value = 0;
+for (let i = 0; i < 3; i++) {
+    const rowDiv = document.createElement("div");
+    for (let j = 0; j < 3; j++) {
+        const numButton = document.createElement("button");
 
-    numButton.textContent = i;
+        numButton.setAttribute("id", value);
+        numButton.textContent = value++;
+        numButton.classList.add("digit");
+    
+        numButton.addEventListener("click", () => { parseNumber(Number(numButton.getAttribute("id"))); });
 
-    // Placeholder, need to add event listener here
+        rowDiv.appendChild(numButton);
+    }
+    numButtonsDiv.appendChild(rowDiv);
+}
+// Buttons for digits 0-8 were created in a 3 x 3 grid, need to create button for 9 outside of the nested loop
+const numButton = document.createElement("button");
+numButton.setAttribute("id", value);
+numButton.textContent = value++;
+numButton.addEventListener("click", () => { parseNumber(Number(numButton.getAttribute("id"))); });
+numButtonsDiv.appendChild(numButton);
 
-    numButtonsDiv.appendChild(numButton);
+/**
+ * 
+ * @param {*} number 
+ */
+function parseNumber(number)
+{
+    // Display the selected number on the screen
+    screen.textContent = number;
+
+    // Set the first operand
+    if (operation === "" && operand1 == null) {
+        operand1 = number;
+    }
+
 }
 
 // Target the div in the HTML that will serve as a container for the operation buttons
@@ -33,7 +68,6 @@ divideButton.textContent = "÷";
 equalsButton.textContent = "=";
 
 // Add respective event listeners
-let operation = "";
 addButton.addEventListener("click", () => { operation = "add"; });
 subtractButton.addEventListener("click", () => { operation = "subtract"; });
 multiplyButton.addEventListener("click", () => { operation = "multiply"; });
@@ -110,7 +144,9 @@ function operate(operator, x, y)
         result = divide(x, y);
     }
 
-    const screen = document.querySelector("#screen");
+    // Display the result on the screen
     screen.textContent = result;
+
     operand1 = result;
+    operand2 = null;
 }
