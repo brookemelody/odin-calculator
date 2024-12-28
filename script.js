@@ -27,12 +27,27 @@ for (let i = 0; i < 3; i++) {
     }
     numButtonsDiv.appendChild(rowDiv);
 }
+
+// Create a new row div for the 9 button and the clear button
+const rowDiv = document.createElement("div");
 // Buttons for digits 0-8 were created in a 3 x 3 grid, need to create button for 9 outside of the nested loop
 const numButton = document.createElement("button");
 numButton.setAttribute("id", value);
 numButton.textContent = value++;
 numButton.addEventListener("click", () => { parseNumber(Number(numButton.getAttribute("id"))); });
-numButtonsDiv.appendChild(numButton);
+rowDiv.appendChild(numButton);
+// Create the clear button
+const clearButton = document.createElement("button");
+clearButton.textContent = "Clear";
+clearButton.addEventListener("click", () => {
+    // Reset operand1, operand2, and operation to their initial values
+    operand1 = null;
+    operand2 = null;
+    operation = "";
+    screen.textContent = 0;
+})
+rowDiv.appendChild(clearButton);
+numButtonsDiv.appendChild(rowDiv);
 
 /**
  * Sets the respective operand and displays it on the screen given a digit 0-9
