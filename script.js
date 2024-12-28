@@ -44,6 +44,7 @@ clearButton.addEventListener("click", () => {
     operand1 = null;
     operand2 = null;
     operation = "";
+    // Reset screen to display 0
     screen.textContent = 0;
 })
 rowDiv.appendChild(clearButton);
@@ -153,6 +154,10 @@ function multiply(x, y)
  */
 function divide(x, y)
 {
+    // Special case: Trying to divide by 0
+    if (y == 0) {
+        return null;
+    }
     return x / y;
 }
 
@@ -165,6 +170,7 @@ function divide(x, y)
 function operate(operator, x, y)
 {
     let result;
+    let fail = false;
     if (operator === "add") {
         result = add(x, y);
     }
@@ -176,11 +182,27 @@ function operate(operator, x, y)
     }
     else if (operator === "divide") {
         result = divide(x, y);
+        // User tried to divide by 0
+        if (result == null) {
+            screen.textContent = "Cannot divide by 0";
+            // Reset operand1, operand2, and operation
+            operand1 = null;
+            operand2 = null;
+            operation = "";
+            fail = true;
+        }
+    }
+    else if (operator === "") {
+        // Maintain the values of operand1 and operand2
+        fail = true;
     }
 
-    // Display the result on the screen
-    screen.textContent = result;
-
-    operand1 = result;
-    operand2 = null;
+    if (!fail) {
+        // Display the result on the screen
+        screen.textContent = result;
+        // Set operand1 to the result and reset operand2 and operation
+        operand1 = result;
+        operand2 = null;
+        operation = "";
+    }
 }
